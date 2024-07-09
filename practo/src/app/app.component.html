@@ -1,52 +1,58 @@
 <nav class="navbar navbar-expand-lg bg-secondary-subtle">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Practo</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Page 1</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Page 2</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="modal" href="#exampleModalToggle" role="button" ><span class="bi bi-box-arrow-in-right"></span> Login</a>
-            <button data-bs-toggle="modal" data-bs-target="#exampleModalToggle">Login</button>
-          </li>
-        </ul>
-      </div>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Practo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active"  *ngIf="loggedHospitalData.hospitalId!=0" [routerLink]="['/appointments']"  >Appoinment</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active"  *ngIf="loggedHospitalData.hospitalId!=0" [routerLink]="['/patients']"  >Patients</a>
+        <!-- </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Page 2</a>
+        </li> -->
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <button type="button" class="btn btn-sm btn-light ms-1" *ngIf="loggedHospitalData.hospitalId!=0">{{loggedHospitalData.hospitalEmailId}}</button>
+          <button type="button" class="btn btn-sm btn-success ms-1" *ngIf="loggedHospitalData.hospitalId!=0" (click)="logOff()">Log Off</button>
+          <button type="button" class="btn btn-sm btn-primary" *ngIf="loggedHospitalData.hospitalId==0" data-bs-toggle="modal" data-bs-target="#exampleModalToggle"> Login</button>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 <router-outlet></router-outlet>
 
-<div class="modal fade bd-example-modal-lg" id="exampleModalToggle" tabindex="-1" aria-labelledby="exampleModalToggle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="myLargeModalLabel">Login</h2>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-12 mb-3">
-              <label for="username" class="form-label">User Name</label>
-              <input type="text" id="loginUsername" class="form-control">
-            </div>
-            <div class="col-12">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" id="loginPassword" class="form-control">
-            </div>
+<div class="modal fade bd-example-modal-lg" id="exampleModalToggle" tabindex="-1" aria-labelledby="exampleModalToggleLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalToggleLabel">Login</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <label for="loginUsername" class="form-label">User Name</label>
+            <input type="text" [(ngModel)]="userObj.userName" id="loginUsername" class="form-control">
+          </div>
+          <div class="col-12">
+            <label for="loginPassword" class="form-label">Password</label>
+            <input type="password" id="loginPassword" [(ngModel)]="userObj.password" class="form-control">
           </div>
         </div>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="modal" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" (click)="onLogin()">Login</button>
+      </div>
     </div>
   </div>
+</div>
+
+
